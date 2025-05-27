@@ -1,0 +1,123 @@
+<app-membernav></app-membernav>
+<div class="" >
+  <div class="row" >
+    <div class="col-md-4"  id="form">
+      <form [formGroup]="memberForm">
+              <div class="form-row">
+                
+                <div class="form-group col-md-6">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" formControlName="name" id="name" [ngModel]="member.name">
+                </div><br>
+              </div>
+              
+              <div class="form-group">
+                <label for="contact">Contact</label>
+                <h2 type="number" class="form-control" id="contact" >{{member.contact}}</h2>
+              </div><br>
+              <div class="form-group">
+                <label for="penalty">Penalty</label>
+                <h2 type="number" class="form-control" id="penalty" >{{member.penalty}}</h2>
+              </div>
+           <br>
+           <div class="form-group">
+            <label for="address">Address</label>
+            <textarea class="form-control" formControlName="address" id="address" [ngModel]="member.address"></textarea>
+          </div><br>
+            </form>
+    </div>
+    
+    <div class="col-md-8" id="form2">
+      <table class="table table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Book Id</th>
+            <th scope="col">Book Name</th>
+            <th scope="col">Book Price</th>
+            <th scope="col">Borrow Date</th>
+            <th scope="col">Return Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Return/Cancle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orderList | paginate: { itemsPerPage: count, currentPage: p }">
+            <td>{{order.bookId}}</td>
+            <td>{{order.bookName}}</td>
+            <td>{{order.price}}</td>
+            <td>{{order.startDate}}</td>
+            <td>{{order.endDate}}</td>
+            <td>{{order.status}}</td>
+            <td *ngIf="order.status==='Pending'"><button  (click)="calculateDaysLeft(order)" class="btn btn-primary">Return</button></td>
+      
+              <td *ngIf="order.status==='Order in process' || order.status==='Packed'|| order.status==='Shipped'|| order.status==='Out for Delivery'"><button data-bs-toggle="modal" (click)="setOrder(order)" data-bs-target="#cancleOrderModal" class="btn btn-primary">Cancle Order</button></td>
+        
+          </tr> 
+        </tbody>
+      </table>
+    </div>
+    <div>
+    </div>
+  </div>
+</div>
+<div class="row" id="submit2">
+  <div class="col-md-6">
+    <button class="btn btn-success"> Save</button>
+  </div>
+  <div class="col-md-3">
+    <div class="text-right">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+  </div>
+</div> 
+
+<div class="modal" #returnBookModal tabindex="-1"  id="returnBookModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"  style="text-align: center;border: 2px solid red;padding: 20px;">
+       <h1>Are you sure you want to return this book ?</h1> 
+       <h5>You have left {{diffDays}} days to retun book.</h5>
+       <p>(You will not receive any refund)</p>
+       <br>
+       <button (click)="processReturn()" class="btn btn-success"  data-bs-dismiss="modal">Yes</button>‎‎‎‎‎‎ <button class="btn btn-danger" (click)="dismissRetuenModal()" data-bs-dismiss="modal">No</button>
+     
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" #cancleOrderModal tabindex="-1"  id="cancleOrderModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"  style="text-align: center;border: 2px solid red;padding: 20px;">
+       <h1>Are you sure you want to cancle order ?</h1> 
+       <br>
+       <button (click)="processCancle()" class="btn btn-success"  data-bs-dismiss="modal">Yes</button>‎‎‎‎‎‎ <button class="btn btn-danger" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" #payPenaltyModal tabindex="-1"  id="payPenalty"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"  style="text-align: center;border: 2px solid red;padding: 20px;">
+       <h1>You have Penalty of ₹ {{member.penalty}}</h1> 
+       <br>
+       <button (click)="payPenalty()" class="btn btn-success"  data-bs-dismiss="modal">Pay</button>‎‎‎‎‎‎ <button (click)="dismissPenaltyModal()" class="btn btn-danger" data-bs-dismiss="modal">Cancle</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" #transactionCancled tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"  style="text-align: center;border: 2px solid red;">
+       <h1>Transaction Cancled<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+        <path fill="#f44336" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#fff" d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"></path><path fill="#fff" d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"></path>
+        </svg></h1> 
+      </div>
+    </div>
+  </div>
+</div>

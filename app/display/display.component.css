@@ -1,0 +1,86 @@
+.container-fluid{
+  background-color: rgb(204, 202, 202);
+  display: flex;
+  justify-content: center;
+  height: 85.3vh;
+  padding: 60px 0px;
+}
+
+#listDiv{
+  width: 1300px;
+  background-color:rgb(236, 236, 236);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+  margin-left: 10px;
+  border-radius: 10px;
+  height: 650px;
+}
+#formDiv{
+  width: 500px;
+  margin-right: 10px;
+  height: 605px;
+}
+#borrow{
+  padding: 10px;
+  background-color:rgb(236, 236, 236);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+  border-radius: 10px;
+}
+.row{
+  padding: 10px;
+}
+#borrow button{
+  border-radius: 9px;
+}
+#searchIntoTable{
+  gap: 20px;
+}
+#buttons{
+  column-gap: 20px;
+}
+#searchBar{
+  width: 500px;
+}
+#return{
+  margin-top: 20px;
+  padding: 10px;
+  background-color:rgb(236, 236, 236);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+}
+#ooktable{
+  height: 465px;
+  overflow: hidden;
+  overflow-y: scroll;
+ 
+}
+.table{
+  background-color: transparent;
+}
+.table thead{
+  position: sticky;
+  top: 0;
+  background-color: rgb(47, 47, 47);
+}
+.table td{
+  background-color: transparent;
+}
+.active {
+  color: green; /* Change this to your desired color */
+  font-weight: 800;
+}
+.deactive{
+  color: red;
+  font-weight: 800;
+}
+.modal{
+  margin-top: 350px;
+  min-height: 85.3vh;
+  align-items: center;
+}
+.modal-body{
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .70);
+}
+#gap{
+  gap: 20px;
+}

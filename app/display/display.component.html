@@ -1,0 +1,183 @@
+<app-navbar></app-navbar>
+<div class="container-fluid" #main>
+  <div class="row" id="row">
+
+    <div class="col" id="formDiv">
+      <div id="innerform">
+        <div id="borrow">
+          <h1 id="myh1">Borrow Book</h1>
+        <div [formGroup]="borrowForm">
+          <div class="row">
+            <div class="col-md-6" >
+              <label for="exampleInputEmail1" class="form-label"><b>Book Id</b></label>
+              <input type="number" class="form-control" formControlName="bookID" #bookID (input)="getBook(bookID.value)">
+              <span [ngClass]="{'active': foundBook,'deactive':!foundBook}"><b>{{bookMsg}}</b></span>
+            </div>
+            <div class="col-md-6">
+              <label for="exampleInputEmail1" class="form-label"><b>Member Id</b></label>
+              <input type="number" class="form-control" formControlName="memberId" #memberID (input)="getMember1(memberID.value)">
+              <span [ngClass]="{'active': foundMember,'deactive':!foundMember}"><b>{{memberMsg}}</b></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="exampleInputEmail1" class="form-label"><b>Return Date</b></label>
+              <input type="date" class="form-control" formControlName="endDate" #returnDate (change)="onDateChange(returnDate.value)" >
+            </div>
+          </div>
+         <div class="row">
+          <button class="btn btn-primary" id="borrowSubmit" [disabled]="!allValid" (click)="submitBorrow()">Add Record</button>
+         </div>
+          </div>
+        </div>
+        <div id="return">
+          <h1 id="myh1">Return Book</h1>
+          <div [formGroup]="borrowForm">
+            <div class="row">
+              <div class="col-md-6" >
+                <label for="exampleInputEmail1" class="form-label"><b>Member Id</b></label>
+              <input type="number" class="form-control" formControlName="memberId" #memberID2 (input)="getMember2(memberID2.value)">
+              <span [ngClass]="{'active': foundMember,'deactive':!foundMember}"><b>{{memberMsg2}}</b></span>
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputEmail1" class="form-label"><b>Book Id</b></label>
+                <select class="form-select" formControlName="bookID" #memBookId aria-label="Default select example" (change)="onBookIdSelect(memBookId.value)">
+                  <option value="">Select Book</option>
+                  <option *ngFor="let id of memBookList">{{id}}</option>
+                  
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-md-6" >
+                <label for="exampleInputEmail1" class="form-label">Penalty</label>
+                 <h2>{{penalty}}</h2>
+              </div>
+            </div>
+           <div class="row">
+            <button class="btn btn-primary" id="borrowSubmit" [disabled]="!allValidd" (click)="submitReturn()">Add Record</button>
+           </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" id="listDiv">
+      <div class="row" id="buttons">
+        <button class="col-md-1 btn btn-primary" (click)="displayBookTable()">Books</button>
+        <button class="col-md-1 btn btn-primary" (click)="displayMemberTable()">Members</button>
+      </div>
+      
+      <div id="bookTable" *ngIf="showBookTable">
+        <h2>Books
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
+            <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+          </svg>
+        </h2>
+        <div class="row" id="searchIntoTable">
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Enter Id/name/author/publisher" #searchBar (input)="onSearchInput(searchBar.value)">
+          </div>
+         
+         
+        </div>
+    <div id="ooktable">
+        <table class="table table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Author</th>
+              <th scope="col">Publisher</th>
+              <th scope="col">Category</th>
+              <th scope="col">Edition</th>
+              <th scope="col">Rack No</th>
+              <th scope="col">Fine</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr  *ngFor="let book of bookList" >
+              <td >{{book.bookId}}</td>
+              <td >{{book.name}}</td>
+              <td >{{book.author}}</td>
+              <td >{{book.publisher.name}}</td>
+              <td >{{book.category}}</td>
+              <td >{{book.edition}}</td>
+              <td >{{book.rackNo}}</td>
+              <td >{{book.fine}}</td>
+              <td [ngClass]="{'active':book.status=='Available','deactive':book.status=='Not Avaliable'}">{{book.status}}</td>
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+      </div>
+ 
+      <div id="bookTable" *ngIf="showMemberTable">
+        <h2>Members
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+          </svg>
+        </h2>
+        <div class="row" id="searchIntoTable">
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Enter Id/name/address/contact" #searchBar2 (input)="onSearchInput2(searchBar2.value)">
+          </div>
+         
+         
+        </div>
+    <div id="ooktable">
+        <table class="table ">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Contact</th>
+              <th scope="col">Address</th>
+              <th scope="col">Penalty</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let member of memberList" >
+              <td>{{member.id}}</td>
+              <td>{{member.name}}</td>
+              <td>{{member.contact}}</td>
+              <td>{{member.address}}</td>
+              <td [ngClass]="{'active':member.penalty==0,'deactive':member.penalty>0}">{{member.penalty}}</td>
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal" #exampleModal tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" style="text-align: center;">
+       <h1>Penalty Paid ?</h1>
+       <br>
+       <div  id="gap">
+        
+          <button class="btn btn-success col-md-4" (click)="proceedtransaction()">Paid</button>
+          ‎ ‎ ‎ 
+
+          <button class="btn btn-danger col-md-4" (click)="closeModal()">Cancle</button>
+  
+       
+        
+       </div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footerBottom">
+    <p><span class="designer">Library Management System</span></p>
+  </div>
+</footer>

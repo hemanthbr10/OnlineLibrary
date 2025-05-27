@@ -1,0 +1,27 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 200px;
+}
+form{
+
+  width: 500px;
+}
+input:focus{
+  transition: all 0.2s;
+  border: none;
+  font-size: 2em;
+}
+.passNotMatch{
+  color:  rgb(164, 20, 20);
+  font-weight: 800;
+}
+.passMatch{
+ color: rgb(20,164,77);
+ font-weight: 800;
+}
+.passNotEnterd{
+  border: none;
+  box-shadow: 0 0 0px rgb(255, 255, 255);
+}

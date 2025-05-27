@@ -1,0 +1,166 @@
+<app-membernav></app-membernav>
+<div class="background">
+<div class="container">
+  <div class="row" id="ror">
+    <!-- Carousel on the left side -->
+    <div class="col-md-5">
+      <div id="image">
+        <img  src="assets/{{book.image}}" alt="First slide">
+        <br><br>
+        **Book price will be refunded after returning book**
+      </div>
+     
+    </div>
+
+    <!-- id information on the right side -->
+    <div class="col-md-7 id-info" style="padding-top: 80px;  padding-right: 0%;" >
+      <h1>{{book.name}}</h1>
+      <!-- id details table -->
+      <table class="table">
+        <tbody>
+          <tr>
+            <td><b>Catrgory:</b> {{book.category}}</td>
+          </tr>
+          <tr>
+            <td><b>Author:</b> {{book.author}}</td>
+          </tr>
+          <tr>
+            <td><b>Publisher:</b> {{book.publisher.name}}</td>
+          </tr>
+          <tr>
+            <td><b>Published on:</b> {{book.publishDate}}</td>
+          </tr>
+          <tr>
+            <td><b>Edition:</b> {{book.edition}}</td>
+          </tr>
+          <tr>
+            <td><b>Language:</b> {{book.language}}</td>
+          </tr>
+          <tr>
+            <td><b>Fine:</b> ₹ {{book.fine}} /day</td>
+          </tr>
+          <tr>
+            <td><b>Description:</b> {{book.description}}</td>
+          </tr>
+          <tr>
+            <td><b>Avaliability:</b> {{book.status}}</td>
+          </tr>
+          <tr>
+          
+              <td><b>Return Date: <span id="spanDateValidation" *ngIf="!dateValidation">Select Option</span> 
+              <select name="" id="" #rrent (change)="calculateRent(rrent.value)" class="form-control" style="width: auto;">
+                <option value="" hidden >Select Option</option>
+                <option value=10>1 Week</option>
+                <option value=20>2 Weeks</option>
+                <option value=30>3 Weeks</option>
+                <option value=40>1 Month</option>
+              </select>
+              </b></td>
+            
+            <tr>
+              
+              <td><b>Total Payable Amount:</b> Rent: {{rent}} + Book price: {{book.price}} = {{total}}  </td>
+              
+              
+            </tr>
+            
+          <tr>
+            <td>
+              <button type="submit"  class="btn btn-warning mr-2" [disabled]="!memberLoggedin" (click)="validateBook()">Borrow Now</button>‎‎‎‎‎‎ 
+              <button type="button" class="btn btn-info" (click)="cancle()">Cancle</button>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+<div>
+<div >
+  <div class="col-md-12" style="padding: 30px 0px 0px 190px;" id="cards">
+    <div>
+     <div class="row" style="gap: 30px 20px;padding: 0px;">
+        <ng-container *ngFor="let book of bookList | paginate: { itemsPerPage: count, currentPage: p }" >
+          <div class="item col-sm-2">
+            <div class="card p-3" id="c"  (click)="viewBook(book.bookId)">
+      
+              <div style="height: 200px;" class="d-flex justify-content-between align-items-center ">
+                  <div class="mt-2">
+                      <h4 id="card_data" class="text-uppercase card-title">{{book.publisher.name}}</h4>
+                      <div class="mt-5">
+                          <h5 id="card-book-name" class="text-uppercase mb-0">{{book.name}}</h5>
+                          <h1 id="card-book-author" class="main-heading mt-0">{{book.author}}</h1>
+                          <div class="d-flex flex-row user-ratings">
+                              <div class="ratings">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              </div>
+                              <h6 class="text-muted ml-1">4/5</h6>
+                          </div>
+                      </div>
+                  </div>
+                  <div  class="image">
+                      <img id="cardImage" src="assets/{{book.image}}" width="200">
+                  </div>
+              </div>
+              
+              <div class="d-flex justify-content-between align-items-center mt-2 mb-2">
+                  <span [ngClass]="{'avaliable':book.status=='Available','notAvaliable':book.status!='Available'}">{{book.status}}</span>
+                  
+                  
+              </div>
+              
+              
+              <p id="card_data_category">{{book.category}}</p>
+              
+              <button class="btn btn-dark" (click)="viewBook(book.bookId)"><b style="font-weight: 800;">Borrow at ₹ {{book.fine}}</b></button>
+          </div>
+          </div>
+        </ng-container>
+        <br><br>
+        <div>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+</div>
+<div class="modal" #pendingBooksMsg tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"  style="text-align: center;border: 2px solid red;">
+       <h1>Return previous book to continue</h1> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" #transactionCancled tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"  style="text-align: center;border: 2px solid red;">
+       <h1>Transaction Cancled<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+        <path fill="#f44336" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#fff" d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"></path><path fill="#fff" d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"></path>
+        </svg></h1> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" #bookNotAvaliable tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"  style="text-align: center;border: 2px solid red;">
+       <h1>Book Not Available<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+        <path fill="#f44336" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#fff" d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"></path><path fill="#fff" d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"></path>
+        </svg></h1> 
+      </div>
+    </div>
+  </div>
+</div>

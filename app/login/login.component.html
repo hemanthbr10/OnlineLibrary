@@ -1,0 +1,240 @@
+<!-- Pills navs -->
+<div class="container">
+<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" [ngClass]="{'activee':showLoginForm}" id="loginButton" (click)="displayLoginForm()">Login</a>
+  </li>
+  <li class="nav-item"  role="presentation">
+    <a class="nav-link" [ngClass]="{'activee':showRegisterForm}" id="registerButton" (click)="displayRegisterationForm()">Register</a>
+  </li>
+</ul>
+<!-- Pills navs -->
+
+<!-- Pills content -->
+
+    <form [formGroup]="loginForm" *ngIf="showLoginForm">
+      <div class="text-center mb-3">
+        <p>Sign in with</p>
+        
+      </div>
+
+    
+
+      <!-- Email input -->
+      <div >
+        <input type="email" id="loginName" placeholder="Email or username" class="form-control" formControlName="username"/>
+        
+      </div>
+<br>
+      <!-- Password input -->
+      <div >
+        <input type="password" id="loginPassword" class="form-control" placeholder="Password" formControlName="password" />
+      
+      </div>
+<br>
+      <!-- 2 column grid layout -->
+      <div class="row mb-4">
+        <div class="col-md-6 d-flex justify-content-center">
+          <!-- Checkbox -->
+          
+        </div>
+
+        <div class="col-md-6 d-flex justify-content-center">
+          <!-- Simple link -->
+          <a style="color: rgb(59,113,202);" (click)="displayForgetPassForm()">Forgot password?</a>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" (click)="loginMember()" class="btn btn-dark btn-block mb-4">Sign in</button>
+
+      <!-- Register buttons -->
+      <div class="text-center">
+        <p>Not a member? <a style="color: rgb(59,113,202);" (click)="displayRegisterationForm()">Register</a></p>
+      </div>
+    </form>
+
+
+  
+    <form [formGroup]="userForm" *ngIf="showRegisterForm">
+      <div class="text-center mb-3">
+        <p>Sign up with</p>
+      </div>
+
+      <!-- Name input -->
+      <div>
+        <input placeholder="Full name" type="text" #name id="registerName" [ngClass]="{'empty':emptyName,'valid':nameValid,'invalid':!nameValid}" class="form-control" (input)="verifyName(name.value)" formControlName="name"/>
+    
+      </div>
+<br>
+      <!-- Username input -->
+      <div>
+        <input type="text" placeholder="Address" #address id="registerUsername" [ngClass]="{'empty':emptyAddress,'valid':addressValid,'invalid':!addressValid}" class="form-control" (input)="verifyAddress(address.value)" formControlName="address"/>
+      
+      </div>
+<br>
+      <!-- Email input -->
+      <div>
+        <input type="email" id="registerEmail" placeholder="Email address" #em class="form-control" [ngClass]="{'empty':emptyEmail,'valid':emailValid,'invalid':!emailValid}" formControlName="contact"(input)="verifyEmail(em.value)" />
+
+      </div>
+<br>
+      <!-- Password input -->
+      <div >
+       
+        <input type="text"  placeholder="Username" id="registerPassword" #username class="form-control" [ngClass]="{'empty':emptyUserName,'valid':userNameValid,'invalid':!userNameValid}" (input)="checkUserNameExists(username.value)" formControlName="userName"/>
+        
+      </div>
+<br>
+      <!-- Repeat Password input -->
+      <div>
+
+        <input type="password" id="registerRepeatPassword" #pass placeholder="Password" class="form-control" [ngClass]="{'empty':emptyPassword,'valid':passwordValid,'invalid':!passwordValid}" (input)="verifyPassword(pass.value)" formControlName="password"/>
+        
+      </div>
+<br>
+      <div>
+        <select #quest name="" class="form-control" id="" (change)="slectQuestion(quest.value)">
+          <option value="">Selct Question</option>
+          <option *ngFor="let question of questions" value="{{question}}">{{question}}</option>
+        </select>
+      </div>
+<br>
+      <div *ngIf="questionSelected" >
+        <input type="text" id="registerRepeatPassword" #ans [ngClass]="{'empty':emptyAnswer,'valid':validAnswer,'invalid':!validAnswer}" placeholder="Answer" (input)="ValidateAnswer(ans.value)" class="form-control" formControlName="forgetPassAns"/>
+  <br>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-dark btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal"  (click)="registerUser()">Sign in</button>
+    </form>
+
+
+    <form [formGroup]="userForm" *ngIf="showForgetPassWordForm">
+      <div class="text-center mb-3">
+        <p>Forgot Password</p>
+      </div>
+      <!-- Name input -->
+      <div>
+        <input placeholder="Email or username" #usernameOrEmail type="text" [ngClass]="{'notClicked':notclicked,'foundUser':userFound,'userNotFound':!userFound}" class="form-control" (input)="checkUsernameOrEmail(usernameOrEmail.value)"/>
+   
+        <br>
+      </div>
+
+      <!-- Username input -->
+      <div *ngIf="userFound">
+        <h1 id="registerName"  class="form-control" >{{member.forgetPssQue}}</h1>
+      </div>
+      <br>
+      <div *ngIf="userFound">
+        <input type="text"  #answer placeholder="Answer" id="registerPassword" class="form-control" formControlName="userName"/>
+        <br>
+      </div>
+      <!-- Email input -->
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary btn-block mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="checkAnswer()">Verify</button>
+    </form>
+  </div>
+
+
+<div class="modal fade" #staticBackdrop id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     
+      <div *ngIf="answerIsCorrect" class="modal-body">
+        <h3>OTP is sent to the email address {{member.contact}}</h3>
+        <br><br>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="number" style="font-size: 1em;" placeholder="Enter OTP" class="form-control col-md-6" name="" #otpInput id="" (input)="addOTP(otpInput.value)">
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-success" (click)="verifyOTP()">submit</button>
+            
+          </div>
+          <br><br>
+          <span>{{timer}}</span>
+          <span>{{message}}</span>
+        </div>
+      </div>
+
+      <div *ngIf="!answerIsCorrect" class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            Wrong Answer
+          </div>
+          <div class="col-md-6">
+            <button style="margin-left: 90%;" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+      
+      
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="modal" #updatePassword id="updatePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6">
+            <button style="margin-left: 90%;" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+        <form [formGroup]="userForm">
+        <div class="row">
+          <div class="col-md-6">
+            <input type="password" style="font-size: 1em;" #password placeholder="Enter new password" id="registerPassword" class="form-control" formControlName="userName"/>
+          </div>
+          <div class="col-md-6">
+            <input type="password" style="font-size: 1em;" #newPassword placeholder="Re-enter new password" id="registerPassword" (input)="checkNewPassword(newPassword.value)"/>
+            <span [ngClass]="{'passNotEnterd':passwordNotEnterd,'passMatch':newPasswordValidation,'passNotMatch':!newPasswordValidation}">{{passWordMsg}}</span>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md 12">
+            <button type="submit" [disabled]="!newPasswordValidation" class="btn btn-primary btn-block mb-3" (click)="resetPassword()" data-bs-dismiss="modal" >Submit</button>
+          </div>
+        </div>
+        <span>{{resetMSG}}</span>
+      </form>
+        
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" #verifyAddingMemberOTP id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" *ngIf="!allValid">
+        Enter Valid Details
+      </div>
+      <div class="modal-body" *ngIf="allValid">
+        <h3>OTP is sent to the email address you enterd.</h3>
+        <br><br>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="number" placeholder="Enter OTP" class="form-control col-md-6" name="" #otpInput id="" (input)="newAddOTP(otpInput.value)">
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-success" (click)="verifyOTP2()">submit</button>
+            
+          </div>
+          <br><br>
+          <span>{{timer}}</span>
+          <span>{{resetMSG}}</span>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>

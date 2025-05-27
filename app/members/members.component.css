@@ -1,0 +1,70 @@
+.container-fluid{
+  background-color: rgb(204, 202, 202);
+  display: flex;
+  justify-content: center;
+  min-height: 85.3vh;
+  padding: 80px 80px;
+}
+.showTable{
+  background-color:rgb(236, 236, 236);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+  border-radius: 10px;
+  width: 100%;
+  padding: 30px;
+}
+.tablee{
+  height: 444px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.table thead{
+  position: sticky;
+  top: 0;
+}
+button{
+  border: none;
+}
+#exampleModal{
+  margin-top: 350px;
+  min-height: 85.3vh;
+  align-items: center;
+}
+#exampleModalBody{
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .70);
+}
+#gap{
+  gap: 20px;
+}
+.publisherTable{
+  height: 200px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.showPublisherTable{
+  background-color:rgb(236, 236, 236);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px;
+}
+.active {
+  color: green; /* Change this to your desired color */
+  font-weight: 800;
+}
+.deactive{
+  color: red;
+  font-weight: 800;
+}
+.invalid{
+  border: 3px solid red;
+  }
+  .valid{
+    border: 3px solid green;
+  }
+  .empty{
+    border: none;
+  }
+  input{
+    border: none;
+  }

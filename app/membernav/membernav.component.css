@@ -1,0 +1,33 @@
+.navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+  background-color: rgb(47, 47, 47);
+  color: white;
+ 
+}
+#elements{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.btn{
+  border: none;
+  color: white;
+}
+.nav-link{
+  color: white;
+}
+#searchbar{
+  width: 500px;
+}
+.navbar-nav{
+  gap: 500px;
+}
+.btn{
+  border: none;
+  box-shadow: none;
+}

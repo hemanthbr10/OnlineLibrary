@@ -1,0 +1,93 @@
+<app-navbar></app-navbar>
+<div class="container-fluid" #main>
+  <div class="showTable">
+    <h2>Orders
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
+        <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+      </svg>
+    </h2>
+    <div class="row" id="searchIntoTable">
+      <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Enter Id/name/author/publisher" #searchBar (input)="onSearchInput(searchBar.value)">
+      </div>
+      <div class="col-md-2">
+        <label>
+          <input type="radio" name="color" value="Packed" [ngModel]="selectedRadio" (click)="getPacked()"> Packed
+        </label><br>
+        <label>
+          <input type="radio" name="color" value="Shipped" [ngModel]="selectedRadio" (click)="getShipped()"> Shipped
+        </label>
+      </div>
+      <div class="col-md-2">
+        <label>
+          <input type="radio" name="color" value="Returned" [ngModel]="selectedRadio" (click)="getReturned()"> Returned
+        </label><br>
+        <label>
+          <input type="radio" name="color" value="Pending" [ngModel]="selectedRadio" (click)="getPending()"> Deliverd
+        </label>
+        
+      </div>
+      <div class="col-md-2">     
+        <label>
+          <input type="radio" name="color" value="Order In Process" [ngModel]="selectedRadio" (click)="getOrderInProcess()"> Order In Process
+        </label><br>
+        <label>
+          <input type="radio" name="color" value="Cancle in process" [ngModel]="selectedRadio" (click)="getCancleInProcess()"> Cancle in process
+        </label>
+      </div>
+      <div class="col-md-2">
+        <label>
+          <input type="radio" name="color" value="Return in process" [ngModel]="selectedRadio" (click)="getReturnInProcess()"> Return in process
+        </label><br>
+      </div>
+    </div>
+    <br>
+    <div class="tablee">
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Book Id</th>
+          <th scope="col">Book Name</th>
+          <th scope="col">Book Price</th>
+          <th scope="col">Member Id</th>
+          <th scope="col">Member Name</th>
+          <th scope="col">Member Contact</th>
+          <th scope="col">Borrow Date</th>
+          <th scope="col">Return Date</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orderList" [ngClass]="{'table-success':order.color==1,'table-danger':order.color==-1,'table-warning':order.color==0}">
+          <td>{{order.bookId}}</td>
+          <td>{{order.bookName}}</td>
+          <td>{{order.price}}</td>
+          <td>{{order.memberId}}</td>
+          <td>{{order.memberName}}</td>
+          <td>{{order.contact}}</td>
+          <td>{{order.startDate}}</td>
+          <td>{{order.endDate}}</td>
+          <td>
+            <select name="" #selectStatus vid="" class="form-control" (change)="updateOrderStatus(selectStatus.value,order)">
+              <option value="" hidden>{{order.status}}</option>
+              <option value="Order in process">Order in process</option>
+              <option value="Packed">Packed</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Out for Delivery">Out for Delivery</option>
+              <option value="Pending">Pending</option>
+              <option value="Returned">Returned</option>
+              <option value="Return in process">Return in process</option>
+              <option value="Order Cancled">Order Cancled</option>
+            </select>
+          </td>
+        </tr> 
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footerBottom">
+    <p><span class="designer">Library Management System</span></p>
+  </div>
+</footer>

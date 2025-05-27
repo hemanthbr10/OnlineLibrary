@@ -1,0 +1,101 @@
+<div class="container">
+  <form>
+    <!-- Email input -->
+    <div >
+     
+     <input type="email" #email (input)="setEmail(email.value)" style="border: none;" id="form2Example1" placeholder="Email Address " class="form-control" />
+      
+    </div>
+  <br>
+    <!-- Password input -->
+    <div >
+
+      <input type="password" #password (input)="setPassWord(password.value)" style="border: none;" id="form2Example2" placeholder="Password" class="form-control" />
+     
+    </div>
+  <br>
+    <!-- 2 column grid layout for inline styling -->
+    <div class="row mb-4">
+      <div class="col d-flex justify-content-center">
+        <!-- Checkbox -->
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+          <label class="form-check-label" for="form2Example31"> Remember me </label>
+        </div>
+      </div>
+  
+      <div class="col">
+        <!-- Simple link -->
+        <a data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="sendOTP()">Forgot password?</a>
+      </div>
+    </div>
+  
+    <!-- Submit button -->
+    <button   type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" (click)="loginAdmin()">Sign in</button>
+  
+    <!-- Register buttons -->
+  </form>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3>OTP is sent to the email address starting with akhil*****&#64;gamil.com</h3>
+        <br><br>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="number" class="form-control col-md-6" name="" #otpInput id="" (change)="addOTP(otpInput.value)">
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updatePassword" (click)="verifyOTP()">submit</button>
+          </div>
+          <br><br>
+          <span>{{timer}}</span>
+          <span>{{message}}</span>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="modal" #updatePassword id="updatePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div *ngIf="result!=1 && OTPVeridied" class="modal-body">
+        Wrong OTP.
+      </div>
+      <div *ngIf="result==1 && OTPVeridied" class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6">
+            <button style="margin-left: 90%;" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+        <form [formGroup]="passwordForm">
+        <div class="row">
+          <div class="col-md-6">
+            <input type="password" style="font-size: 1em;" #password placeholder="Enter new password" id="registerPassword" class="form-control" formControlName="password"/>
+          </div>
+          <div class="col-md-6">
+            <input type="password" style="font-size: 1em;" #newPassword placeholder="Re-enter new password" id="registerPassword" (input)="checkNewPassword(newPassword.value)"/>
+            <span [ngClass]="{'passNotEnterd':passwordNotEnterd,'passMatch':newPasswordValidation,'passNotMatch':!newPasswordValidation}">{{passWordMsg}}</span>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md 12">
+            <button type="submit" [disabled]="!newPasswordValidation" class="btn btn-primary btn-block mb-3" (click)="resetPassword()" data-bs-dismiss="modal" >Submit</button>
+          </div>
+        </div>
+      </form>
+        
+      </div>
+    
+    </div>
+  </div>
+</div>

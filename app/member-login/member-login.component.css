@@ -1,0 +1,163 @@
+#cardImage{
+  height: 200px;
+  width: 120px;
+}
+#card_data{
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100ch;
+  width: 90px;
+}
+#card_data_category{
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190ch;
+  
+}
+#card-book-name{
+  width: 130px;
+
+}
+#card-book-author{
+  font-size: medium;
+}
+#background{
+overflow-x: hidden;
+background-color: white;
+}
+#cards{
+  min-height: 900px;
+  padding: 70px;
+} 
+#others{
+  font-size: medium;
+  padding: 110px 140px;
+}
+.for{
+
+  position: fixed;
+  width: 400px;
+  height: 750px;
+}
+
+.card{
+  height: 400px;
+  width: 230px;
+}
+.height{
+    
+  height:350px;
+}
+.dropdown-menu{
+  width: 500px;
+  max-height: 423px;
+  overflow: hidden;
+}
+
+.card{
+  width:290px;
+  height:360px;
+  transition: ease-in 0.1s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+  border-radius: 10px;
+}
+.searchFound{
+  filter: brightness(25%);
+ 
+}
+.searchNotFount{
+  opacity: 1;
+
+}
+#c:hover{
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, .50);
+  border-radius: 10px;
+  transform: scale(1.05);
+  .image{
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, .50);
+    border-radius: 10px;
+  }
+}
+
+.image{
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+  border-radius: 10px;
+  position:absolute;
+  right:12px;
+  top:10px;
+}
+.navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+  background-color: rgb(47, 47, 47);
+  color: white;
+ 
+}
+#elements{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.btn{
+  border: none;
+  color: white;
+}
+.nav-link{
+  color: white;
+}
+#searchbar{
+  width: 500px;
+}
+.navbar-nav{
+  gap: 500px;
+}
+.btn{
+  border: none;
+  box-shadow: none;
+}
+ 
+.main-heading{
+  
+  font-size:40px;
+  color:red !important;
+}
+.avaliable{
+  color: green;
+}
+.notAvaliable{
+  color: red;
+}
+.ratings i{
+  
+  color:orange;
+  
+}
+
+.user-ratings h6{
+  margin-top:2px;
+}
+
+.colors{
+  display:flex;
+  margin-top:2px;
+}
+
+.colors span{
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  margin-right:6px;
+}
+
+.btn-danger{
+  
+  height:48px;
+  font-size:18px;
+}
+label{
+  cursor: pointer;
+}

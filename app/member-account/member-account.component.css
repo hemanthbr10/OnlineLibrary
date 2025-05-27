@@ -1,0 +1,32 @@
+#form{
+  padding: 175px 50px 75px 100px;
+}
+#form2{
+  padding: 175px 100px 75px 50px;
+
+  overflow: hidden;
+  height: 700px;
+}
+label{
+  font-weight: 900;
+}
+input{
+  font-size: x-large;
+}
+h2{
+  font-size: x-large;
+}
+textarea{
+  font-size: x-large;
+}
+#submit{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 500px;
+}
+#submit2{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}

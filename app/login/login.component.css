@@ -1,0 +1,59 @@
+.container{
+  padding: 150px 10px;
+  width: 500px;
+  height: 91.2vh;
+  
+}
+.activee{
+  background-color: #212529;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+
+}
+input:focus{
+  transition: all 0.2s;
+  border: none;
+  font-size: 2em;
+}
+form{
+
+  padding: 10px;
+
+  border-radius: 10px;
+}
+.form-control{
+  border: none;
+}
+.foundUser{
+  border: 2.5px solid rgb(20,164,77);
+  box-shadow: 0 0 20px rgba(20, 164, 78, 0.547);
+}
+.userNotFound{
+  border: 2.5px solid rgb(164, 20, 20);
+  box-shadow: 0 0 20px rgba(164, 20, 20, 0.547);
+}
+.notClicked{
+  border: none;
+  box-shadow: 0 0 0px rgb(255, 255, 255);
+}
+.passNotMatch{
+  color:  rgb(164, 20, 20);
+  font-weight: 800;
+}
+.passMatch{
+ color: rgb(20,164,77);
+ font-weight: 800;
+}
+.passNotEnterd{
+  border: none;
+  box-shadow: 0 0 0px rgb(255, 255, 255);
+}
+.invalid{
+  border: 3px solid red;
+  }
+  .valid{
+    border: 3px solid green;
+  }
+  .empty{
+    border: none;
+  }

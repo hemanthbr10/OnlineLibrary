@@ -1,0 +1,331 @@
+<app-navbar></app-navbar>
+<div class="container-fluid" #main>
+  <div class="showTable">
+    <h2>Books
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
+        <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+      </svg>
+    </h2>
+    <div class="row" id="searchIntoTable">
+      <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Enter Id/name/author/publisher" #searchBar (input)="onSearchInput(searchBar.value)">
+      </div>
+      <div class="col-md-4">
+        <button class="col-md-3 btn btn-success" data-bs-toggle="modal" data-bs-target="#addBook">Add Book</button>
+
+      </div>     
+    </div>
+    <br>
+    <div class="tablee">
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Author</th>
+          <th scope="col">Publisher</th>
+          
+          <th scope="col">Catrgory</th>
+          <th scope="col">Fine</th>
+          <th scope="col">Edition</th>
+          <th scope="col">Purchase Date</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Rack No</th>
+          <th scope="col">Status</th>
+          <th scope="col">Update/Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of bookList">
+          <td>{{book.bookId}}</td>
+          <td>{{book.name}}</td>
+          <td>{{book.author}}</td>
+          <td>{{book.publisher.name}}</td>
+       
+          <td>{{book.category}}</td>
+          <td>{{book.fine}}</td>
+          <td>{{book.edition}}</td>
+          <td>{{book.dateOfPurchase}}</td>
+          <td>{{book.quantity}}</td>
+          <td>{{book.rackNo}}</td>
+          <td [ngClass]="{'active':book.status=='Available','deactive':book.status=='Not Avaliable'}">{{book.status}}</td>
+          <td><button data-bs-toggle="modal" data-bs-target="#updateBook" (click)="updateBook(book)" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+          </svg></button>‎ ‎ <button class="btn btn-outline-danger" (click)="deleteBook(book.bookId)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+          </svg></button></td>
+        </tr>
+       
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footerBottom">
+    <p><span class="designer">Library Management System</span></p>
+  </div>
+</footer>
+<div class="modal" #exampleModal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" id="exampleModalBody" style="text-align: center;">
+       <h1>Sure you want to delete ?</h1>
+       <br>
+       <div id="gap">
+          <button class="btn btn-danger col-md-3"  (click)="delete()">Yes</button>
+          ‎ ‎ ‎ 
+          <button class="btn btn-success col-md-3" (click)="cancle()">No</button>
+       </div> 
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" #deleteSucess tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" style="text-align: center;">
+       <h1>Deleted Sucessfully ✅</h1> 
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal modal-xl" id="addBook" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Book</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xl-6">
+            <form [formGroup]="bookForm" class="container" enctype="multipart/form-data">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" formControlName="name" [ngClass]="{'empty':emptyName,'valid':nameValid,'invalid':!nameValid}" id="name" #name (input)="nameValidation(name.value)" class="form-control">
+                    <span [ngClass]="{'TextValid':nameValid,'TextInvalid':!nameValid}">{{bookFoundMsg}}</span>
+                  </div><br>
+                  <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" formControlName="author" [ngClass]="{'empty':emptyAAuthor,'valid':authorValid,'invalid':!authorValid}" #author (input)="authorValidation(author.value)" id="author" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" formControlName="price" #price [ngClass]="{'empty':emptyPrice,'valid':priceValid,'invalid':!priceValid}" min="0" (input)="priceValidation(price.value)" id="price" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="dateOfPurchase">Date of Purchase</label>
+                    <input type="date" formControlName="dateOfPurchase"  id="dateOfPurchase" max="{{date}}" [ngClass]="{'valid':dateOfPurchaseValid}" min="2024-01-01" (change)="dopValidation()" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="dateOfPurchase">Fine</label>
+                    <input type="number" formControlName="fine" min="0" #fine [ngClass]="{'empty':emptyFine,'valid':fineValid,'invalid':!fineValid}" (input)="fineValidation(fine.value)" id="dateOfPurchase" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="dateOfPurchase">Image</label>
+                    <input type="file" class="form-control" [ngClass]="{'valid':imageChangeValid}" (change)="onFileSelected($event)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="dateOfPurchase">Language</label>
+                    <input type="text" class="form-control" #lang [ngClass]="{'empty':emptyLang,'valid':langValid,'invalid':!langValid}" (input)="languageValidation(lang.value)" formControlName="language">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="rackNo">Rack No</label>
+                    <input type="number" formControlName="rackNo" #rack min="0" max="20" [ngClass]="{'empty':emptyRack,'valid':rackValid,'invalid':!rackValid}" (input)="rackNoValidation(rack.value)" id="rackNo" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" formControlName="quantity" #quantity min="0" max="10" [ngClass]="{'empty':emptyQuantity,'valid':quantityValid,'invalid':!quantityValid}" (input)="qantityValidation(quantity.value)" id="quantity" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="edition">Edition</label>
+                    <input type="number" formControlName="edition" #edition min="0" max="20" [ngClass]="{'empty':emptyEdition,'valid':editionValid,'invalid':!editionValid}" (input)="editionValidation(edition.value)" id="edition" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="edition">Publisher Id</label>
+                    <input type="text" #publisherInput  id="publisher" [ngClass]="{'empty':emptyPublisher,'valid':foundMember,'invalid':!foundMember}" formControlName="publisher" class="form-control" (input)="filterData(publisherInput.value)">
+                    <span [ngClass]="{'active': foundMember,'deactive':!foundMember}"><b>{{publisherName}}</b></span>
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <label for="edition">Category</label>
+                    <input type="text" formControlName="category" #category [ngClass]="{'empty':emptyCategory,'valid':CategoryValid,'invalid':!CategoryValid}" (input)="categoryValidation(category.value)" id="edition" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="edition">Published date</label>
+                    <input type="date" formControlName="publishDate" max="{{date}}" min="1900-01-01" [ngClass]="{'valid':publishdateValid}" (change)="publishdateValidation()" id="edition" class="form-control">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="edition">Desciption</label>
+                    <textarea type="date" formControlName="description" #desciption [ngClass]="{'empty':emptyDescrition,'valid':descriptionValid,'invalid':!descriptionValid}" (input)="descriptionValidation(desciption.value)" id="edition" class="form-control"></textarea>
+                  </div><br>
+                </div>
+              </div>
+            </form>
+          </div>
+        <div class="col-xl-6">
+          <div class="showPublisherTable">
+            <div class="row" id="searchIntoTable">
+              <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Enter Id/name/author/publisher" #publisher (input)="searchPublisher(publisher.value)">
+              </div>
+                  
+            </div>
+            <br>
+            <div class="publisherTable">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Address</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let publisher of publisherList">
+                  <td>{{publisher.publisherId}}</td>
+                  <td>{{publisher.name}}</td>
+                  <td>{{publisher.address}}</td>
+                </tr>
+               
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary" [disabled]="!allValid" (click)="addBook()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-xl" id="updateBook" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Book</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xl-6">
+            <form [formGroup]="bookForm" class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" formControlName="name" class="form-control" [ngModel]="book.name" [ngClass]="{'empty':emptyName,'valid':nameValid,'invalid':!nameValid}" id="name" #nameUpdate (input)="nameValidation(nameUpdate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" formControlName="author" id="author" class="form-control" [ngModel]="book.author" [ngClass]="{'empty':emptyAAuthor,'valid':authorValid,'invalid':!authorValid}" #authorUpdate (input)="authorValidation(authorUpdate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" formControlName="price" id="price" class="form-control" [ngModel]="book.price" #priceUpdate [ngClass]="{'empty':emptyPrice,'valid':priceValid,'invalid':!priceValid}" min="0" (input)="priceValidation(priceUpdate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="dateOfPurchase">Date of Purchase</label>
+                    <input type="date" formControlName="dateOfPurchase" id="dateOfPurchase" class="form-control" [ngModel]="book.dateOfPurchase" max="{{date}}" [ngClass]="{'valid':dateOfPurchaseValid}" min="2024-01-01" (change)="dopValidation()">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="dateOfPurchase">Fine</label>
+                    <input type="number" formControlName="fine" id="dateOfPurchase" [ngModel]="book.fine" class="form-control" #fineUpdate [ngClass]="{'empty':emptyFine,'valid':fineValid,'invalid':!fineValid}" (input)="fineValidation(fineUpdate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="dateOfPurchase">Language</label>
+                    <input type="text" formControlName="language" id="dateOfPurchase" [ngModel]="book.language" class="form-control" #langUpdate [ngClass]="{'empty':emptyLang,'valid':langValid,'invalid':!langValid}" (input)="languageValidation(langUpdate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="edition">Desciption</label>
+                    <textarea type="date" formControlName="description" id="edition" [ngModel]="book.description" class="form-control" #desciptionUpdate [ngClass]="{'empty':emptyDescrition,'valid':descriptionValid,'invalid':!descriptionValid}" (input)="descriptionValidation(desciptionUpdate.value)"></textarea> 
+                  </div><br>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="rackNo">Rack No</label>
+                    <input type="number" formControlName="rackNo" id="rackNo" class="form-control" [ngModel]="book.rackNo" #rackUpdate min="0" max="20" [ngClass]="{'empty':emptyRack,'valid':rackValid,'invalid':!rackValid}" (input)="rackNoValidation(rackUpdate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" formControlName="quantity" id="quantity" class="form-control" [ngModel]="book.quantity" #quantityUpdaate min="0" max="10" [ngClass]="{'empty':emptyQuantity,'valid':quantityValid,'invalid':!quantityValid}" (input)="qantityValidation(quantityUpdaate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="edition">Edition</label>
+                    <input type="number" formControlName="edition" id="edition" class="form-control" [ngModel]="book.edition" #editionUpdate min="0" max="20" [ngClass]="{'empty':emptyEdition,'valid':editionValid,'invalid':!editionValid}" (input)="editionValidation(editionUpdate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="edition">Publisher Id</label>
+                    <input type="text" #publisherInput2  id="publisher" formControlName="publisher" [ngClass]="{'empty':emptyPublisher,'valid':foundMember,'invalid':!foundMember}" class="form-control" [ngModel]="publisherId" (input)="filterData(publisherInput2.value)">
+                    <span [ngClass]="{'active': foundMember,'deactive':!foundMember}"><b>{{publisherName}}</b></span>
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <label for="edition">Category</label>
+                    <input type="text" formControlName="category" id="edition" [ngModel]="book.category" class="form-control" #categoryUpdate [ngClass]="{'empty':emptyCategory,'valid':CategoryValid,'invalid':!CategoryValid}" (input)="categoryValidation(categoryUpdate.value)">
+                  </div><br>
+                  <div class="form-group">
+                    <label for="edition">Publish Date</label>
+                    <input type="date" formControlName="publishDate" id="edition" [ngModel]="book.publishDate" class="form-control" max="{{date}}" min="1900-01-01" [ngClass]="{'valid':publishdateValid}" (change)="publishdateValidation()">
+                  </div><br>
+                </div>
+              </div>
+            </form>
+          </div>
+        <div class="col-xl-6">
+          <div class="showPublisherTable">
+            <div class="row" id="searchIntoTable">
+              <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Enter Id/name/author/publisher" #publisher (input)="searchPublisher(publisher.value)">
+              </div>
+                  
+            </div>
+            <br>
+            <div class="publisherTable">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Address</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let publisher of publisherList">
+                  <td>{{publisher.publisherId}}</td>
+                  <td>{{publisher.name}}</td>
+                  <td>{{publisher.address}}</td>
+                </tr>
+               
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="clearForm()">Close</button>
+        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary" [disabled]="allValid2" (click)="updateBooks()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
